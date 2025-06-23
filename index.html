@@ -1,31 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom URL Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <title>URL Launcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(120deg, #0f2027, #2c5364, #1a2980, #0f2027);
+      background-size: 400% 400%;
+      animation: gradientMove 10s ease-in-out infinite;
+      font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+      overflow: hidden;
+    }
+    @keyframes gradientMove {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+    .container {
+      background: rgba(10, 25, 50, 0.88);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      padding: 40px 32px;
+      min-width: 320px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+    }
+    h1 {
+      color: #00b4ff;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      margin: 0;
+      font-weight: 600;
+      text-shadow: 0 2px 8px #0f2027cc;
+    }
+    form {
+      display: flex;
+      gap: 12px;
+      width: 100%;
+    }
+    input[type="text"] {
+      flex: 1;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 8px;
+      background: #111c2e;
+      color: #00b4ff;
+      font-size: 1rem;
+      outline: none;
+      transition: box-shadow 0.2s;
+      box-shadow: 0 2px 8px #1a298066;
+    }
+    input[type="text"]:focus {
+      box-shadow: 0 0 0 2px #00b4ff;
+    }
+    button {
+      background: linear-gradient(90deg, #00b4ff 0%, #1a2980 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #00b4ff44;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #1a2980 0%, #00b4ff 100%);
+      box-shadow: 0 4px 16px #00b4ff88;
+    }
+    .credit {
+      color: #2c5364;
+      font-size: 0.9rem;
+      margin-top: 10px;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Custom URL Generator</h1>
-    </header>
-
-    <main>
-        <section>
-            <h2>Enter a URL to Open</h2>
-            <input type="text" id="url-input" placeholder="Enter URL here" />
-            <button id="generate-button">Open URL</button>
-        </section>
-        <section id="message" style="display: none;">
-            <p>A new page has been opened!</p>
-        </section>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Custom URL Generator. All rights reserved.</p>
-    </footer>
+  <div class="container">
+    <h1>Open URL in IFrame</h1>
+    <form id="urlForm" autocomplete="off">
+      <input type="text" id="urlInput" placeholder="Enter URL (e.g. https://example.com)" required>
+      <button type="submit">Open</button>
+    </form>
+    <div class="credit">Minimalist Black &amp; Blue Theme</div>
+  </div>
+  <script>
+    document.getElementById('urlForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      let url = document.getElementById('urlInput').value.trim();
+      if (!/^https?:\/\//i.test(url)) {
+        url = 'https://' + url;
+      }
+      const win = window.open('about:blank', '_blank');
+      if (win) {
+        win.document.write(`
+          <body style="margin:0;background:#0f2027;display:flex;align-items:center;justify-content:center;height:100vh;">
+            <iframe src="${url.replace(/"/g, '&quot;')}" style="border:none;width:100vw;height:100vh;"></iframe>
+          </body>
+        `);
+        win.document.close();
+      } else {
+        alert('Popup blocked! Please allow popups for this site.');
+      }
+    });
+  </script>
 </body>
 </html>
