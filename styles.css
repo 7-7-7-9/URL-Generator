@@ -1,76 +1,121 @@
+/* Import Inter font */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #121212; /* Dark background */
-    color: #ffffff; /* White text */
-    text-align: center;
+    min-height: 100vh;
+    color: #e7f6ff;
+    background: linear-gradient(120deg, #0f2027, #2c5364, #00bfff, #0f2027);
+    background-size: 400% 400%;
+    animation: gradientMove 16s ease infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Animate the background gradient */
+@keyframes gradientMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 header {
-    background: #1e1e1e; /* Darker header */
-    padding: 20px 0;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    background: rgba(10, 20, 30, 0.85);
+    padding: 32px 0 16px 0;
+    border-radius: 0 0 24px 24px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    width: 100%;
+    max-width: 520px;
+    margin: 0 auto 32px auto;
 }
 
 h1 {
     margin: 0;
-    font-size: 2.5em;
-    color: #00bfff; /* Bright blue */
+    font-size: 2.7em;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    color: #00c6fb;
+    text-shadow: 0 2px 16px #0e1a2b;
 }
 
 h2 {
-    margin: 20px 0;
-    color: #00bfff; /* Bright blue */
+    margin: 24px 0 8px 0;
+    color: #00bfff;
+    font-weight: 400;
+    letter-spacing: 1px;
 }
 
 input {
-    padding: 15px;
-    font-size: 16px;
-    width: 300px;
-    margin-top: 20px;
+    padding: 16px;
+    font-size: 1.1em;
+    width: 320px;
+    margin-top: 18px;
     border: none;
-    border-radius: 5px;
-    background-color: #1e1e1e; /* Dark input background */
-    color: #ffffff; /* White text */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s, box-shadow 0.3s;
+    border-radius: 8px;
+    background: rgba(15, 32, 39, 0.85);
+    color: #e7f6ff;
+    box-shadow: 0 2px 12px rgba(0, 191, 255, 0.08);
+    transition: background 0.3s, box-shadow 0.3s;
 }
 
 input::placeholder {
-    color: #888; /* Placeholder color */
+    color: #7ecfff;
+    opacity: 0.7;
 }
 
 input:focus {
-    background-color: #2a2a2a; /* Lighter on focus */
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5); /* Blue glow */
-    outline: none; /* Remove outline */
+    background: rgba(0, 191, 255, 0.14);
+    box-shadow: 0 0 12px #00bfff88;
+    outline: none;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 16px;
+    padding: 16px 36px;
+    font-size: 1.1em;
     cursor: pointer;
-    margin-top: 10px;
+    margin-top: 18px;
     border: none;
-    border-radius: 5px;
-    background-color: #00bfff; /* Bright blue button */
-    color: #ffffff; /* White text */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    transition: background-color 0.3s, transform 0.3s;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #00bfff 0%, #005bea 100%);
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 2px 16px #00bfff33;
+    transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+    letter-spacing: 0.5px;
 }
 
 button:hover {
-    background-color: #009acd; /* Darker blue on hover */
-    transform: translateY(-2px); /* Lift effect */
+    background: linear-gradient(90deg, #005bea 0%, #00bfff 100%);
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 4px 24px #00bfff55;
 }
 
 footer {
     text-align: center;
-    padding: 10px 0;
-    background: #1e1e1e; /* Dark footer */
-    color: #ffffff; /* White text */
-    position: relative;
-    bottom: 0;
+    padding: 16px 0;
+    background: rgba(10, 20, 30, 0.85);
+    color: #7ecfff;
+    border-radius: 24px 24px 0 0;
     width: 100%;
+    max-width: 520px;
+    margin: 32px auto 0 auto;
+    font-size: 0.95em;
+    letter-spacing: 0.5px;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.18);
+}
+
+/* Minimalistic spacing for container */
+.main-content {
+    background: rgba(0,0,0,0.15);
+    padding: 32px 24px 24px 24px;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px #00bfff11;
+    max-width: 520px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
