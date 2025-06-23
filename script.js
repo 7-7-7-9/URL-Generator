@@ -4,8 +4,11 @@ document.getElementById('generate-button').addEventListener('click', function() 
 
     // Check if the URL is valid
     if (url) {
-        // Open the specified URL in a new blank page
-        window.open(url, '_blank');
+        // Open a new blank page
+        const newWindow = window.open('about:blank', '_blank');
+
+        // Navigate the new blank page to the specified URL
+        newWindow.location.href = url;
 
         // Show a message to the user
         document.getElementById('message').style.display = 'block';
