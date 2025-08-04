@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>URL Launcher</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
     html, body {
       height: 100%;
@@ -96,12 +96,53 @@
   <div class="container">
     <h1>Open URL in About:Blank</h1>
     <form id="urlForm" autocomplete="off">
-      <input type="text" id="urlInput" placeholder="Enter URL (e.g. https://example.com)" required>
-      <button type="submit">Open</button>
+      <input type="text" id="url-input" placeholder="Enter URL (e.g. https://example.com)" required />
+      <button type="submit" id="generate-button">Open</button>
     </form>
     <div class="credit">Note: Not all links will work</div>
   </div>
-  <script src="script.js"></script>
 
+  <script>
+    // Base64 1x1 transparent favicon data URI
+    const BLANK_ICON = "data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAH/4AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
+    function openCloakedWindow(url) {
+      const pop = window.open('about:blank', '_blank');
+      if (!pop) {
+        alert("Please allow popups for this site.");
+        return;
+      }
+
+      pop.document.write(\`
+        <html>
+          <head>
+            <title>\\u200B</title>
+            <link rel="icon" href="\${BLANK_ICON}">
+          </head>
+          <body style="margin:0; background:#0f2027; display:flex; align-items:center; justify-content:center; height:100vh;">
+            <iframe src="\${url.replace(/"/g, '&quot;')}" style="border:none; width:100vw; height:100vh;"></iframe>
+          </body>
+        </html>
+      \`);
+      pop.document.close();
+    }
+
+    document.getElementById('urlForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      let inputUrl = document.getElementById('url-input').value.trim();
+
+      if (!inputUrl) {
+        alert("Please enter a valid URL.");
+        return;
+      }
+
+      if (!/^https?:\\/\\//i.test(inputUrl)) {
+        inputUrl = 'https://' + inputUrl;
+      }
+
+      openCloakedWindow(inputUrl);
+    });
+  </script>
 </body>
 </html>
