@@ -104,45 +104,39 @@
 
   <script>
     // Base64 1x1 transparent favicon data URI
-    const BLANK_ICON = "data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAH/4AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+   document.getElementById('urlForm').addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
 
-    function openCloakedWindow(url) {
-      const pop = window.open('about:blank', '_blank');
-      if (!pop) {
-        alert("Please allow popups for this site.");
-        return;
-      }
+  let inputUrl = document.getElementById('url-input').value.trim();
+  if (!inputUrl) {
+    alert("Please enter a valid URL.");
+    return;
+  }
 
-      pop.document.write(\`
-        <html>
-          <head>
-            <title>\\u200B</title>
-            <link rel="icon" href="\${BLANK_ICON}">
-          </head>
-          <body style="margin:0; background:#0f2027; display:flex; align-items:center; justify-content:center; height:100vh;">
-            <iframe src="\${url.replace(/"/g, '&quot;')}" style="border:none; width:100vw; height:100vh;"></iframe>
-          </body>
-        </html>
-      \`);
-      pop.document.close();
-    }
+  if (!/^https?:\/\//i.test(inputUrl)) {
+    inputUrl = 'https://' + inputUrl;
+  }
 
-    document.getElementById('urlForm').addEventListener('submit', function(event) {
-      event.preventDefault();
+  const pop = window.open('about:blank', '_blank');
+  if (!pop) {
+    alert("Popup blocked! Please enable popups for this site and try again.");
+    return;
+  }
 
-      let inputUrl = document.getElementById('url-input').value.trim();
+  pop.document.write(`
+    <html>
+      <head>
+        <title>\u200B</title>
+        <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAH/4AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=">
+      </head>
+      <body style="margin:0; background:#0f2027; display:flex; align-items:center; justify-content:center; height:100vh;">
+        <iframe src="${inputUrl.replace(/"/g, '&quot;')}" style="border:none; width:100vw; height:100vh;"></iframe>
+      </body>
+    </html>
+  `);
+  pop.document.close();
+});
 
-      if (!inputUrl) {
-        alert("Please enter a valid URL.");
-        return;
-      }
-
-      if (!/^https?:\\/\\//i.test(inputUrl)) {
-        inputUrl = 'https://' + inputUrl;
-      }
-
-      openCloakedWindow(inputUrl);
-    });
   </script>
 </body>
 </html>
