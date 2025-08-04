@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>URL Launcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <form id="urlForm" autocomplete="off">
+    <input type="text" id="url-input" placeholder="Enter URL (e.g. https://example.com)" required />
+    <button type="submit" id="generate-button">Open</button>
+  </form>
+
+  <script>
+    const BLANK_ICON = "data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAH/4AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+
+    document.getElementById('urlForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      let inputUrl = document.getElementById('url-input').value.trim();
+
+      if (!inputUrl) {
+        alert("Please enter a valid URL.");
+        return;
+      }
+
+      if (!/^https?:\/\//i.test(inputUrl)) {
+        inputUrl = 'https://' + inputUrl;
+      }
+
+      const pop = window.open('about:blank', '_blank');
+      if (!pop) {
+        alert("Popup blocked! Please allow popups and try again.");
+        return;
+      }
+
+      const escapedUrl = inputUrl.replace(/"/g, '&quot;');
+
+      pop.document.write(`
+        <html>
+          <head>
+            <title>\u200B</title>
+            <link rel="icon" href="${BLANK_ICON}">
+          </head>
+          <body style="margin:0; background:#0f2027; display:flex; align-items:center; justify-content:center; height:100vh;">
+            <iframe src="${escapedUrl}" style="border:none; width:100vw; height:100vh;"></iframe>
+          </body>
+        </html>
+      `);
+      pop.document.close();
+    });
+  </script>
+</body>
+</html>
