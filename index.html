@@ -125,20 +125,31 @@
      
   pop.document.open()
   pop.document.write(`
-    <html>
-      <head>
-        <title>\u200B</title>
-       <link rel="icon" href="https://7-7-7-9.github.io/URL-Generator/blank.ico" type="image/x-icon">
-
-
-      </head>
-      <body style="margin:0; background:#0f2027; display:flex; align-items:center; justify-content:center; height:100vh;">
-        <iframe src="${inputUrl.replace(/"/g, '&quot;')}" style="border:none; width:100vw; height:100vh;"></iframe>
-      </body>
-    </html>
+   <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>\u200B</title>
+    <link rel="icon" href="https://7-7-7-9.github.io/URL-Generator/blank.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://7-7-7-9.github.io/URL-Generator/blank.ico" type="image/x-icon" />
+    <style>
+      html, body { margin: 0; height: 100vh; background: #0f2027; }
+      iframe { border: none; width: 100vw; height: 100vh; }
+    </style>
+  </head>
+  <body>
+    <iframe src="${inputUrl.replace(/"/g, '&quot;')}"></iframe>
+  </body>
+  </html>
   `);
   pop.document.close();
-  pop.focus();
+ setTimeout(() => {
+  let link = pop.document.createElement('link');
+  link.rel = 'icon';
+  link.href = 'https://7-7-7-9.github.io/URL-Generator/blank.ico';
+  link.type = 'image/x-icon';
+  pop.document.head.appendChild(link);
+}, 100);
 });
 
   </script>
