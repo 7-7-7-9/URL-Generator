@@ -102,25 +102,6 @@
     <div class="credit">Note: Not all links will work</div>
   </div>
   <script src="script.js"></script>
-  <script>
-    document.getElementById('urlForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      let url = document.getElementById('urlInput').value.trim();
-      if (!/^https?:\/\//i.test(url)) {
-        url = 'https://' + url;
-      }
-      const win = window.open('about:blank', '_blank');
-      if (win) {
-        win.document.write(`
-          <body style="margin:0;background:#0f2027;display:flex;align-items:center;justify-content:center;height:100vh;">
-            <iframe src="${url.replace(/"/g, '&quot;')}" style="border:none;width:100vw;height:100vh;"></iframe>
-          </body>
-        `);
-        win.document.close();
-      } else {
-        alert('Popup blocked! Please allow popups for this site.');
-      }
-    });
-  </script>
+
 </body>
 </html>
