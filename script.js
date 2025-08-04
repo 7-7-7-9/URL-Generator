@@ -1,22 +1,34 @@
 document.getElementById('generate-button').addEventListener('click', function() {
     const url = document.getElementById('url-input').value;
     if (url) {
-   const newWindow = window.open('about:blank', '_blank');
+
+        const BLANK_ICON = "data:image/x-icon;base64,AAABAAEAEBAAAAAAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAQAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAH/4AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAP//AAD//wAA//8AAH/4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA===";
+
+const newWindow = window.open('about:blank', '_blank');
 if (newWindow) {
-    // Ensure the head exists!
+    // Make sure <head> exists
     if (!newWindow.document.head) {
         const head = newWindow.document.createElement('head');
-        newWindow.document.documentElement.appendChild(head);
+        newWindow.document.documentElement.insertBefore(head, newWindow.document.body);
     }
-    
-    // Set a blank favicon
+
+    // Create link for favicon with data URI
     const link = newWindow.document.createElement('link');
     link.rel = 'icon';
-    link.href = 'https://raw.githubusercontent.com/chompypotato/carb0n/refs/heads/main/go/blank.ico';
+    link.href = BLANK_ICON;
     newWindow.document.head.appendChild(link);
 
-    // Set a blank/hidden title
-    newWindow.document.title = "\u200B"; // zero-width space
+    // Set a blank title
+    newWindow.document.title = "\u200B";
+
+    // Add your iframe or other content here
+    // ...
+
+    newWindow.document.close();
+} else {
+    alert("Please allow popups.");
+}
+
 
     // Add a very simple style to 'force' reflow
     newWindow.document.body.style.margin = '0';
