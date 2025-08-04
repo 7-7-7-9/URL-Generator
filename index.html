@@ -122,7 +122,8 @@
     alert("Popup blocked! Please enable popups for this site and try again.");
     return;
   }
-
+     
+  pop.document.open()
   pop.document.write(`
     <html>
       <head>
@@ -137,7 +138,7 @@
     </html>
   `);
   pop.document.close();
-     pop.focus();
+  pop.focus();
 });
 
   </script>
